@@ -1,0 +1,11 @@
+beautifulsoup4==4.12.2
+certifi==2023.11.17
+charset-normalizer==3.3.2
+future==0.18.3
+idna==3.6
+lzstring==1.0.4
+pyasn1==0.5.1
+requests==2.31.0
+rsa==4.9
+soupsieve==2.5
+urllib3==2.1.0
