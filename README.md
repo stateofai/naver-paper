@@ -1,6 +1,10 @@
-## Install
+## Usage
+> Please edit the example.py before you run and make sure that your Naver ID should be login with application password
 ```
-$ pip install naverpaper
+$ git clone https://github.com/stateofai/naver-paper.git
+$ cd naver-paper
+$ pip install -r requirements.txt
+$ python run.py 
 ```
 
 ## Example Code
@@ -21,15 +25,6 @@ if __name__ == "__main__":
         response.raise_for_status()
         time.sleep(5)
         print("캠페인 URL : " + link)
-```
-
-## Usage
-> Please edit the example.py before you run and make sure that your Naver ID should be login with application password
-```
-$ git clone https://github.com/stateofai/naverpaper.git
-$ cd naverpaper
-$ pip install -r requirements.txt
-$ python example.py 
 ```
 
 ## References
