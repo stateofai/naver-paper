@@ -24,9 +24,14 @@ if __name__ == "__main__":
 ```
 
 ## Usage
+> Please edit the example.py before you run and make sure that your Naver ID should be login with application password
 ```
 $ git clone https://github.com/stateofai/naverpaper.git
-$ pip install -r requirements.txt
 $ cd naverpaper
-$ python example.py (Edit example.py before you run)
+$ pip install -r requirements.txt
+$ python example.py 
 ```
+
+## References
+* https://help.naver.com/service/5640/contents/10219?lang=ko
+* https://help.naver.com/service/5640/contents/8584?lang=ko
