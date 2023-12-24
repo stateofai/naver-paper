@@ -23,7 +23,10 @@ if __name__ == "__main__":
         print("캠페인 URL : " + link)
 ```
 
-## Run
+## Usage
 ```
-$ python run.py
+$ git clone https://github.com/stateofai/naverpaper.git
+$ pip install -r requirements.txt
+$ cd naverpaper
+$ python example.py (Edit example.py before you run)
 ```
