@@ -1,11 +1,12 @@
 import time
-import naverpaper
+from naver import session as s
+from naver import find as f
 
 base_url = "https://www.clien.net/service/board/jirum"
 
 if __name__ == "__main__":
-    s = naverpaper.naver_session("##ID##", "##PASSWORD##")
-    campaign_links = naverpaper.find_naver_campaign_links(base_url)
+    s = s.session("##ID##", "##PASSWORD##")
+    campaign_links = f.find(base_url)
     if campaign_links == []:
         print("모든 링크를 방문했습니다.")
     for link in campaign_links:
