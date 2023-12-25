@@ -16,7 +16,7 @@ from naver import find as f
 base_url = "https://www.clien.net/service/board/jirum"
 
 if __name__ == "__main__":
-    s = s.session("xhqod10wh", "PD9UHUULJ7E5")
+    s = s.session("##ID##", "##PASSWORD##")
     campaign_links = f.find(base_url)
     if campaign_links == []:
         print("모든 링크를 방문했습니다.")
