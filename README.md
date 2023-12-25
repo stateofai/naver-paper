@@ -1,5 +1,5 @@
 ## Usage
-> Please edit the example.py before you run and make sure that your Naver ID should be login with application password
+> Before you run , please edit the run.py and make sure that your Naver ID would be login with application password to avoid 2FA or CAPTCHA
 ```
 $ git clone https://github.com/stateofai/naver-paper.git
 $ cd naver-paper
