@@ -1,12 +1,11 @@
+bs4==0.0.1
 beautifulsoup4==4.12.2
 certifi==2023.11.17
 charset-normalizer==3.3.2
-future==0.18.3
 idna==3.6
-lzstring==1.0.4
-pyasn1==0.5.1
+selenium==4.16.0
 requests==2.31.0
-rsa==4.9
 soupsieve==2.5
 urllib3==2.1.0
-naverpaper==0.5
+webdriver-manager==4.0.1
+chromedrivermanager==0.0.1
