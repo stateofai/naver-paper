@@ -13,6 +13,7 @@ setup(
         'lxml',
         'pyc',
         'rsa',
+        'selenium',
         'urllib3',
     ],
     classifiers=[
