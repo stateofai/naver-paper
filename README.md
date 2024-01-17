@@ -13,7 +13,7 @@ google-chrome --version
 ```
 
 > Install ChromeDriver
-- Go to [https://googlechromelabs.github.io/chrome-for-testing/]
+- Go to [https://googlechromelabs.github.io/chrome-for-testing/](https://googlechromelabs.github.io/chrome-for-testing/)
 - Download ChromeDriver same as Google Chrome Version
 - Unzip and Copy chromedriver binary file to /usr/bin/chromedriver
 
