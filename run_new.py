@@ -58,6 +58,7 @@ def find_naver_campaign_links(base_url, visited_urls_file='visited_urls.txt'):
 
 # 크롬 드라이버 옵션 설정
 chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('headless') # headless mode
 
 # 새로운 창 생성
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
