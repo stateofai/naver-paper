@@ -1,33 +1,14 @@
 ## Usage
-> Before you run , please edit the run.py and make sure that your Naver ID would be login with application password to avoid 2FA or CAPTCHA
+> 기존 requests 모듈을 이용한 로그인인 작동하지 않아 selenium을 이용한 로그인으로 변경되었습니다
+> chromedriver 설치 후 코드를 실행해주세요
 ```
 $ git clone https://github.com/stateofai/naver-paper.git
 $ cd naver-paper
 $ pip install -r requirements.txt
-$ python run.py 
-```
-
-## Example Code
-```python
-import time
-from naver import session as s
-from naver import find as f
-
-base_url = "https://www.clien.net/service/board/jirum"
-
-if __name__ == "__main__":
-    s = s.session("##ID##", "##PASSWORD##")
-    campaign_links = f.find(base_url)
-    if campaign_links == []:
-        print("모든 링크를 방문했습니다.")
-    for link in campaign_links:
-        response = s.get(link)
-        print(response.text)  # for debugging
-        response.raise_for_status()
-        time.sleep(5)
-        print("캠페인 URL : " + link)
+$ python run_new.py 
 ```
 
 ## References
+* https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.109/win64/chromedriver-win64.zip
 * https://help.naver.com/service/5640/contents/10219?lang=ko
 * https://help.naver.com/service/5640/contents/8584?lang=ko
