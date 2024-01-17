@@ -1,4 +1,10 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 import time
+
 import requests
 import uuid
 import re
@@ -44,47 +50,41 @@ def encrypt_account(user_id, user_password):
 
 
 def session(user_id, user_password):
-    """Create and return a Naver session."""
+    """Create and return a Naver session using Selenium."""
     try:
-        encrypted_name, encrypted_password = encrypt_account(user_id, user_password)
-        session = requests.Session()
-        retries = Retry(
-            total=5, backoff_factor=0.1, status_forcelist=[500, 502, 503, 504]
-        )
-        session.mount("https://", HTTPAdapter(max_retries=retries))
+        # Set up Chrome options for Selenium
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--disable-gpu")
 
-        request_headers = {"User-agent": "Mozilla/5.0"}
-        bvsd_uuid = uuid.uuid4()
-        encData = (
-            '{"a":"%s-4","b":"1.3.4","d":[{"i":"id","b":{"a":["0,%s"]},"d":"%s","e":false,"f":false},{"i":"%s","e":true,"f":false}],"h":"1f","i":{"a":"Mozilla/5.0"}}'
-            % (bvsd_uuid, user_id, user_id, user_password)
-        )
-        bvsd = '{"uuid":"%s","encData":"%s"}' % (
-            bvsd_uuid,
-            lzstring.LZString.compressToEncodedURIComponent(encData),
-        )
+        # Initialize Chrome driver (make sure the path is correct)
+        service = Service('/usr/bin/chromedriver')
+        driver = webdriver.Chrome(service=service, options=chrome_options)
 
-        response = session.post(
-            "https://nid.naver.com/nidlogin.login",
-            data={
-                "svctype": "0",
-                "enctp": "1",
-                "encnm": encrypted_name,
-                "enc_url": "http0X0.0000000000001P-10220.0000000.000000www.naver.com",
-                "url": "www.naver.com",
-                "smart_level": "1",
-                "encpw": encrypted_password,
-                "bvsd": bvsd,
-            },
-            headers=request_headers,
-        )
+        # Open Naver login page
+        driver.get("https://nid.naver.com/nidlogin.login")
 
-        finalize_url = re.search(
-            r'location\.replace\("([^"]+)"\)', response.content.decode("utf-8")
-        ).group(1)
-        session.get(finalize_url)
-        return session
+        # Enter username and password
+        username = driver.find_element(By.ID, "id")
+        password = driver.find_element(By.ID, "pw")
+
+        username.send_keys(user_id)
+        password.send_keys(user_password)
+
+        # Click the login button
+        login_button = driver.find_element(By.ID, "log.login")
+        login_button.click()
+
+        # Wait for page load or for any redirects
+        time.sleep(5)
+
+        # Here, you could add additional steps to verify successful login
+        # or to navigate to a specific page after login
+
+        # Return the driver object for further use
+        return driver
 
     except Exception as e:
         raise ConnectionError("Failed to create Naver session.") from e
-
