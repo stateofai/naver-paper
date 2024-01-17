@@ -48,10 +48,10 @@ ChromeDriver 120.0.6099.109 (3419140ab665596f21b385ce136419fde0924272-refs/branc
 
 > Before you run , please edit the run.py and make sure that your Naver ID would be login with application password to avoid 2FA or CAPTCHA
 ```bash
-$ git clone https://github.com/20eung/naver-paper.git
-$ cd naver-paper
-$ pip install -r requirements.txt
-$ python run.py 
+git clone https://github.com/20eung/naver-paper.git
+cd naver-paper
+pip3 install -r requirements.txt
+python3 run.py 
 ```
 
 ## Example Code
