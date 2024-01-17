@@ -1,5 +1,5 @@
 ## Usage
-> 기존 requests 모듈을 이용한 로그인인 작동하지 않아 selenium을 이용한 로그인으로 변경되었습니다
+> 기존 requests 모듈을 이용한 로그인인 작동하지 않아 selenium을 이용한 로그인으로 변경되었습니다. (Thanks to @bagng)
 > chromedriver 설치 후 코드를 실행해주세요
 ```
 $ git clone https://github.com/stateofai/naver-paper.git
