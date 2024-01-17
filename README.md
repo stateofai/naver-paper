@@ -63,8 +63,7 @@ from naver import find as f
 base_url = "https://www.clien.net/service/board/jirum"
 
 if __name__ == "__main__":
-    driver = s.session("20eung", "ZFHUJEUXFLBG")
-#   driver = s("20eung", "ZFHUJEUXFLBG")
+    driver = s.session("##ID##", "##PASSWORD##")
     campaign_links = f.find(base_url)
 
     if campaign_links == []:
