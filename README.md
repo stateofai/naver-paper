@@ -1,7 +1,7 @@
 
 ## Usage
 > 기존 requests 모듈을 이용한 로그인인 작동하지 않아 selenium을 이용한 로그인으로 변경되었습니다. (Thanks to @bagng)
-> chromedriver 설치 후 코드를 실행해주세요
+> chromedriver 설치 후 코드를 실행해주세요. 리눅스 및 맥에서 작동 되는 것을 확인했습니다. 
 
 ### Install Google Chrome
 ```bash
