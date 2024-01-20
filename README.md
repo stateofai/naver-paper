@@ -1,7 +1,7 @@
-> 기존 requests 모듈을 이용한 로그인이 작동하지 않아 selenium을 이용한 로그인으로 변경되었습니다. (Thanks to @bagng)
+> 기존 requests 모듈을 이용한 로그인이 작동하지 않아 selenium을 사용하도록 변경되었습니다. (Thanks to @bagng)
 > chromedriver 설치 후 코드를 실행해주세요.
 > 리눅스(Ubuntu 22.04) 및 맥(macOS Sonoma)에서 작동 되는 것을 확인했습니다.
-> 윈도우는 확인해보지 못했으나, 혹시 실행되신 분이 있으면 알려주세요!
+> 윈도우는 확인해보지 못했으나, 혹시 실행되신 분이 있으면 알려주세요.
 
 ## Prerequisites
 ### Install Google Chrome
@@ -13,7 +13,8 @@ $ sudo gdebi google-chrome-stable_current_amd64.deb
 ```
 > Verifying Google Chrome Installation
 ```bash
-google-chrome --version
+$ google-chrome --version
+Google Chrome 120.0.6099.224
 ```
 > Install ChromeDriver
 - Go to [https://googlechromelabs.github.io/chrome-for-testing/]
@@ -48,6 +49,9 @@ $ cd naver-paper
 $ pip install -r requirements.txt
 $ python run_new.py 
 ```
+
+## Contribution
+* 저는 전문개발자가 아니라 코드의 품질은 낮을 수 있습니다. 많은 능력자분들이 기여를 해주시면 좋겠어요
 
 ## References
 * https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.109/win64/chromedriver-win64.zip
