@@ -4,7 +4,7 @@
 > 윈도우는 확인해보지 못했으나, 혹시 실행되신 분이 있으면 알려주세요.
 
 ### GitHub Actions 사용 
-1. 이 repo를 clone
+1. 이 repo를 fork
 2. secrets에 ID, PASSWORD 항목에 네이버 ID 및 패스워드 입력 (Settings -> Secrets and variable -> Actions -> New repository secret)
 3. 30분마다 주기적으로 실행되는 것을 확인
 
