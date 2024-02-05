@@ -1,5 +1,7 @@
 name: Naver Paper Python GitHub Actions
 on:
+  schedule:
+    - cron: '*/30 * * * *'
   push:
     branches: [ "main" ]
 jobs:
