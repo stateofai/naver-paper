@@ -3,6 +3,11 @@
 > 리눅스(Ubuntu 22.04) 및 맥(macOS Sonoma)에서 작동 되는 것을 확인했습니다.
 > 윈도우는 확인해보지 못했으나, 혹시 실행되신 분이 있으면 알려주세요.
 
+### GitHub Actions 사용 
+1. 이 repo를 clone
+2. secrets에 ID, PASSWORD 항목에 네이버 ID 및 패스워드 입력 (Settings -> Secrets and variable -> Actions -> New repository secret)
+3. 30분마다 주기적으로 실행되는 것을 확인
+
 ## Prerequisites
 ### Install Google Chrome
 ```bash
@@ -43,11 +48,6 @@ $ /usr/local/bin/chromedriver --version
 ChromeDriver 120.0.6099.109 (3419140ab665596f21b385ce136419fde0924272-refs/branch-heads/6099@{#1483})
 ```
 ## Usage
-### 1.GitHub Actions 사용 (Recommend)
-1. 이 repo를 clone
-2. secret에 ID, PASSWORD 항목에 네이버 ID 및 패스워드 입력
-3. 30분마다 주기적으로 실행되는 것을 확인
-### 2. 소스코드 사용
 ```
 $ git clone https://github.com/stateofai/naver-paper.git
 $ cd naver-paper
