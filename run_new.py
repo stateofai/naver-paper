@@ -87,8 +87,8 @@ driver2 = driver
 username = driver2.find_element(By.NAME, 'id')
 pw = driver2.find_element(By.NAME, 'pw')
 
-input_id="naver_id"
-input_pw="naver_password"
+input_id=${{ secrets.ID }}
+input_pw=${{ secrets.PASSWORD }}
 
 # ID input 클릭
 username.click()
