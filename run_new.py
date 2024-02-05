@@ -88,10 +88,10 @@ driver2 = driver
 username = driver2.find_element(By.NAME, 'id')
 pw = driver2.find_element(By.NAME, 'pw')
 
-ID = os.getenv("ID","ID is null")
+USERNAME = os.getenv("USERNAME","ID is null")
 PASSWORD = os.getenv("PASSWORD","PASSWORD is null")
 
-input_id=ID
+input_id=USERNAME
 input_pw=PASSWORD
 
 # ID input 클릭
