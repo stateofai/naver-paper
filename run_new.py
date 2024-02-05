@@ -4,6 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import time
 import requests
+import os
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
@@ -87,8 +88,11 @@ driver2 = driver
 username = driver2.find_element(By.NAME, 'id')
 pw = driver2.find_element(By.NAME, 'pw')
 
-input_id=${{ secrets.ID }}
-input_pw=${{ secrets.PASSWORD }}
+ID = os.getenv("ID","ID is null")
+PASSWORD = os.getenv("PASSWORD","PASSWORD is null")
+
+input_id=ID
+input_pw=PASSOWRD
 
 # ID input 클릭
 username.click()
