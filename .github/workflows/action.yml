@@ -27,5 +27,5 @@ jobs:
         echo "password = " $PASSWORD >> ~/.naver/credentials
         python run_new.py
       env:
-        USERNAME: ${{ secrets.USER_ID }} # secret에 저장된 내용을 불러옴
-        PASSWORD: ${{ secrets.USER_PW }}
+        USERNAME: ${{ secrets.ID }} # secret에 저장된 내용을 불러옴
+        PASSWORD: ${{ secrets.PASSWORD }}
