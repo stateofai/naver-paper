@@ -92,7 +92,7 @@ ID = os.getenv("ID","ID is null")
 PASSWORD = os.getenv("PASSWORD","PASSWORD is null")
 
 input_id=ID
-input_pw=PASSOWRD
+input_pw=PASSWORD
 
 # ID input 클릭
 username.click()
