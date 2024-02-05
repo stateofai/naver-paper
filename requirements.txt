@@ -8,4 +8,3 @@ requests==2.31.0
 soupsieve==2.5
 urllib3==2.1.0
 webdriver-manager==4.0.1
-chromedrivermanager==0.0.1
