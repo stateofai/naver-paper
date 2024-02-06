@@ -1,5 +1,6 @@
 name: Naver Paper Python GitHub Actions
 on:
+  workflow_dispatch:
   schedule:
     - cron: '*/30 * * * *'
 jobs:
