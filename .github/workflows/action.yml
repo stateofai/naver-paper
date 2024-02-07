@@ -12,6 +12,7 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.11"
+        cache: 'pip' # caching pip dependencies
     - name: Install dependencies
       run: |
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
