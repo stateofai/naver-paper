@@ -72,7 +72,7 @@ for link in campaign_links:
     driver2.get(link)
     try:
         result = driver2.switch_to.alert
-        # print(result.text)
+        print(result.text)
         result.accept()
     except:
         print("no alert")
