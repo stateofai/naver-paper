@@ -66,6 +66,27 @@ time.sleep(1)
 driver2.find_element(By.CLASS_NAME, "btn_login").click()
 time.sleep(1)
 
+# new.save 등록
+# new.dontsave 등록 안함
+try:
+    driver2.find_element(By.ID, "new.dontsave").click()
+    time.sleep(1)
+except:
+    pass
+
+try_login_limit = os.getenv("TRY_LOGIN", 3)
+try_login_count = 1
+while True:
+    page_title = driver2.title
+    if(page_title == "NAVER"):
+        break
+    if(try_login_count > try_login_limit):
+        exit()
+    print(f"로그인 되지 않음 #{try_login_count}")
+    print(f"페이지 타이틀 : {page_title}")
+    time.sleep(1)
+    try_login_count += 1
+
 for link in campaign_links:
     print(link) # for debugging
     # Send a request to the base URL
@@ -75,7 +96,7 @@ for link in campaign_links:
         print(result.text)
         result.accept()
     except:
-        print("no alert")
+        print("알럿창 없음")
         pageSource = driver2.page_source
         # print(pageSource)
     time.sleep(1)

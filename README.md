@@ -10,6 +10,7 @@
 2. secrets에 ID, PASSWORD 항목에 네이버 ID 및 패스워드 입력. ID라는 이름으로 네이버 ID를 넣고 PASSWORD라는 항목에 패스워드 입력
    (Settings -> Secrets and variable -> Actions -> New repository secret)
 3. 30분마다 주기적으로 실행되는 것을 확인
+4. secrets TRY_LOGIN 항목에 로그인 재시도 횟수 입력, 기본값은 3번
 
 ## Prerequisites
 ### Install Google Chrome

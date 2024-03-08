@@ -46,7 +46,7 @@ def find_naver_campaign_links(visited_urls_file='visited_urls_ppomppu.txt'):
                 campaign_links.append(campaign_link)
 
         # Add the visited link to the set
-        visited_urls.add(link)
+        visited_urls.add(full_link)
 
     # Save the updated visited URLs to the file
     with open(visited_urls_file, 'w') as file:
