@@ -68,8 +68,11 @@ time.sleep(1)
 
 # new.save 등록
 # new.dontsave 등록 안함
-driver2.find_element(By.ID, "new.dontsave").click()
-time.sleep(1)
+try:
+    driver2.find_element(By.ID, "new.dontsave").click()
+    time.sleep(1)
+except:
+    pass
 
 try_login_limit = os.getenv("TRY_LOGIN", 3)
 try_login_count = 1
