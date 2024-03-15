@@ -6,7 +6,7 @@ import time, os, argparse, json
 import naver_paper_clien as clien
 import naver_paper_ppomppu as ppomppu
 
-def main(id, pwd, headness = True):
+def grep_campaign_links():
     campaign_links = []
     campaign_links += clien.find_naver_campaign_links()
     campaign_links += ppomppu.find_naver_campaign_links()
@@ -14,6 +14,10 @@ def main(id, pwd, headness = True):
     if(campaign_links == []):
         print("모든 링크를 방문했습니다.")
         exit()
+
+    return campaign_links
+
+def main(campaign_links, id, pwd, headness = True):
 
     # 크롬 드라이버 옵션 설정
     chrome_options = webdriver.ChromeOptions()
@@ -112,7 +116,8 @@ if __name__ == "__main__":
     if args.id is None and args.pw is None and args.cd is None:
         id = os.getenv("USERNAME", "ID is NULL")
         pw = os.getenv("PASSWORD", "PASSWORD is NULL")
-        main(id, pw, headness)
+        campaign_links = grep_campaign_links()
+        main(campaign_links, id, pw, headness)
     elif(args.cd is not None):
         try:
             json_obj = json.loads(args.cd)
@@ -122,9 +127,10 @@ if __name__ == "__main__":
             print('json generate site https://jsoneditoronline.org/')
             exit()
         credential_length = len(json_obj)
+        campaign_links = grep_campaign_links()
         for idx in range(credential_length):
             print(f"{idx+1}번째 계정")
-            main(json_obj[idx]["id"], json_obj[idx]["pw"], headness)
+            main(campaign_links, json_obj[idx]["id"], json_obj[idx]["pw"], headness)
     else:
         if args.id is None:
             print('use -i or --id argument')
@@ -132,4 +138,5 @@ if __name__ == "__main__":
         if args.pw is None:
             print('use -p or --pwd argument')
             exit()
-        main(args.id, args.pw, headness)
+        campaign_links = grep_campaign_links()
+        main(campaign_links, args.id, args.pw, headness)
