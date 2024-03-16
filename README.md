@@ -5,7 +5,7 @@
 > 리눅스(Ubuntu 22.04) 및 맥(macOS Sonoma)에서 작동 되는 것을 확인했습니다.
 > 윈도우는 확인해보지 못했으나, 혹시 실행되신 분이 있으면 알려주세요.
 
-### GitHub Actions 사용 
+### GitHub Actions 사용
 1. 이 repo를 fork
 2. secrets에 ID, PASSWORD 항목에 네이버 ID 및 패스워드 입력. ID라는 이름으로 네이버 ID를 넣고 PASSWORD라는 항목에 패스워드 입력
    (Settings -> Secrets and variable -> Actions -> New repository secret)
@@ -48,7 +48,7 @@ inflating: chromedriver-linux64/LICENSE.chromedriver
 inflating: chromedriver-linux64/chromedriver
 $ sudo cp chromedriver-linux64/chromedriver /usr/local/bin
 $ sudo chmod a+x /usr/local/bin/chromedriver
-$ /usr/local/bin/chromedriver --version 
+$ /usr/local/bin/chromedriver --version
 ChromeDriver 120.0.6099.109 (3419140ab665596f21b385ce136419fde0924272-refs/branch-heads/6099@{#1483})
 ```
 ## Usage
@@ -56,7 +56,15 @@ ChromeDriver 120.0.6099.109 (3419140ab665596f21b385ce136419fde0924272-refs/branc
 $ git clone https://github.com/stateofai/naver-paper.git
 $ cd naver-paper
 $ pip install -r requirements.txt
-$ python run_new.py 
+
+# 환경 변수로 USERNAME, PASSWORD 읽이서 실행
+$ python run_new.py
+
+# argument 로 id, pw 입력
+$ python run_new.py -i YOUR_ID -p YOUR_PW
+
+# argument 로 멀티 계정 입력
+$ python run_new.py -c '[{"id":"ID_1","pw":"PW_1"},{"id":"ID_2","pw":"PW_2"}]'
 ```
 
 ## Contribution
