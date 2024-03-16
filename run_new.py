@@ -92,9 +92,9 @@ def main(campaign_links, id, pwd, headness = True):
 
     for link in campaign_links:
         print(link) # for debugging
-        # Send a request to the base URL
-        driver2.get(link)
         try:
+            # Send a request to the base URL
+            driver2.get(link)
             result = driver2.switch_to.alert
             print(result.text)
             result.accept()
