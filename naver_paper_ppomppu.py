@@ -15,7 +15,7 @@ def find_naver_campaign_links(visited_urls_file='visited_urls_ppomppu.txt'):
     response = requests.get(base_url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    list_subject_links = soup.find_all('td', class_='list_vspace')
+    list_subject_links = soup.find_all('td', class_='baseList-space')
 
     naver_links = []
     for span in list_subject_links:
