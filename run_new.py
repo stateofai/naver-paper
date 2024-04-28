@@ -100,7 +100,8 @@ def main(campaign_links, id, pwd, headness = True):
             result.accept()
         except:
             print("알럿창 없음")
-            pageSource = driver2.page_source
+            time.sleep(3)
+            # pageSource = driver2.page_source
             # print(pageSource)
         time.sleep(1)
 
