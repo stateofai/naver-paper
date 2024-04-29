@@ -4,11 +4,13 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import time, os, argparse, json
 import naver_paper_clien as clien
+import naver_paper_damoang as damoang
 import naver_paper_ppomppu as ppomppu
 
 def grep_campaign_links():
     campaign_links = []
     campaign_links += clien.find_naver_campaign_links()
+    campaign_links += damoang.find_naver_campaign_links()
     campaign_links += ppomppu.find_naver_campaign_links()
 
     if(campaign_links == []):
