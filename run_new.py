@@ -19,11 +19,11 @@ def grep_campaign_links():
 
     return campaign_links
 
-def main(campaign_links, id, pwd, headness = True):
+def main(campaign_links, id, pwd, headless = True):
 
     # 크롬 드라이버 옵션 설정
     chrome_options = webdriver.ChromeOptions()
-    if(headness):
+    if(headless):
         chrome_options.add_argument('headless') # headless mode
 
     # 새로운 창 생성
@@ -110,17 +110,21 @@ def main(campaign_links, id, pwd, headness = True):
 
 if __name__ == "__main__":
     # for debug
-    headness = True
+    headless = True
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--id', type=str, required=False, help="naver id")
     parser.add_argument('-p', '--pw', type=str, required=False, help="naver password")
     parser.add_argument('-c', '--cd', type=str, required=False, help="credential json")
+    parser.add_argument('--headless', type=bool, required=False,
+                        default=True, action=argparse.BooleanOptionalAction,
+                        help="browser headless mode (default: headless)")
     args = parser.parse_args()
+    headless = args.headless
     if args.id is None and args.pw is None and args.cd is None:
         id = os.getenv("USERNAME", "ID is NULL")
         pw = os.getenv("PASSWORD", "PASSWORD is NULL")
         campaign_links = grep_campaign_links()
-        main(campaign_links, id, pw, headness)
+        main(campaign_links, id, pw, headless)
     elif(args.cd is not None):
         try:
             json_obj = json.loads(args.cd)
@@ -133,7 +137,7 @@ if __name__ == "__main__":
         campaign_links = grep_campaign_links()
         for idx in range(credential_length):
             print(f"{idx+1}번째 계정")
-            main(campaign_links, json_obj[idx]["id"], json_obj[idx]["pw"], headness)
+            main(campaign_links, json_obj[idx]["id"], json_obj[idx]["pw"], headless)
     else:
         if args.id is None:
             print('use -i or --id argument')
@@ -142,4 +146,4 @@ if __name__ == "__main__":
             print('use -p or --pwd argument')
             exit()
         campaign_links = grep_campaign_links()
-        main(campaign_links, args.id, args.pw, headness)
+        main(campaign_links, args.id, args.pw, headless)
