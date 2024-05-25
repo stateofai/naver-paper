@@ -127,7 +127,8 @@ if __name__ == "__main__":
         main(campaign_links, id, pw, headless)
     elif(args.cd is not None):
         try:
-            json_obj = json.loads(args.cd)
+            file = open(args.cd, "r")
+            json_obj = json.loads(file)
         except:
             print('use -i or --cd argument')
             print('credential json sample [{"id":"id1","pw":"pw1"},{"id":"id2","pw":"pw2"}]')
