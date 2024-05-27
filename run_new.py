@@ -17,7 +17,7 @@ def grep_campaign_links():
         print("모든 링크를 방문했습니다.")
         exit()
 
-    return campaign_links
+    return set(campaign_links)
 
 def main(campaign_links, id, pwd, headless = True):
 
