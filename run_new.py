@@ -29,7 +29,7 @@ def init(campaign_links, id, pwd, headless=True):
 
     if headless is True:
         chrome_options.add_argument("headless")
-    user_dir = hashlib.sha256(f"{id}_{pwd}".encode('utf-8')).hexdigest()
+    user_dir = os.getcwd() + "/" + hashlib.sha256(f"{id}_{pwd}".encode('utf-8')).hexdigest()
     chrome_options.add_argument(f"--user-data-dir={user_dir}")
 
     # 새로운 창 생성
