@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import time, os, argparse, json
+import hashlib
 import naver_paper_clien as clien
 import naver_paper_damoang as damoang
 import naver_paper_ppomppu as ppomppu
@@ -26,7 +27,8 @@ def init(campaign_links, id, pwd, headless=True):
     chrome_options = webdriver.ChromeOptions()
 
     chrome_options.headless = headless
-    chrome_options.add_argument("--user-data-dir=session")
+    user_dir = hashlib.sha256(f"{id}_{pwd}".encode('utf-8')).hexdigest()
+    chrome_options.add_argument(f"--user-data-dir={user_dir}")
 
     # 새로운 창 생성
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
