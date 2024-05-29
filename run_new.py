@@ -9,6 +9,7 @@ import naver_paper_clien as clien
 import naver_paper_damoang as damoang
 import naver_paper_ppomppu as ppomppu
 
+
 def grep_campaign_links():
     campaign_links = []
     campaign_links += clien.find_naver_campaign_links()
@@ -26,7 +27,8 @@ def init(campaign_links, id, pwd, headless=True):
     # 크롬 드라이버 옵션 설정
     chrome_options = webdriver.ChromeOptions()
 
-    chrome_options.headless = headless
+    if headless is True:
+        chrome_options.add_argument("headless")
     user_dir = hashlib.sha256(f"{id}_{pwd}".encode('utf-8')).hexdigest()
     chrome_options.add_argument(f"--user-data-dir={user_dir}")
 
@@ -112,6 +114,7 @@ def init(campaign_links, id, pwd, headless=True):
 
     return driver2
 
+
 def visit(campaign_links, driver2):
     for link in campaign_links:
         print(link)  # for debugging
@@ -128,10 +131,12 @@ def visit(campaign_links, driver2):
             # print(pageSource)
         time.sleep(1)
 
+
 def main(campaign_links, id, pwd, headless=True):
     driver = init(campaign_links, id, pwd, headless)
     visit(campaign_links, driver)
     driver.quit()
+
 
 if __name__ == "__main__":
     # for debug
