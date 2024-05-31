@@ -1,11 +1,14 @@
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import time, os, argparse, json
+import hashlib
 import naver_paper_clien as clien
 import naver_paper_damoang as damoang
 import naver_paper_ppomppu as ppomppu
+
 
 def grep_campaign_links():
     campaign_links = []
@@ -19,12 +22,15 @@ def grep_campaign_links():
 
     return set(campaign_links)
 
-def main(campaign_links, id, pwd, headless = True):
 
+def init(campaign_links, id, pwd, headless=True):
     # 크롬 드라이버 옵션 설정
     chrome_options = webdriver.ChromeOptions()
-    if(headless):
-        chrome_options.add_argument('headless') # headless mode
+
+    if headless is True:
+        chrome_options.add_argument("headless")
+    user_dir = os.getcwd() + "/" + hashlib.sha256(f"{id}_{pwd}".encode('utf-8')).hexdigest()
+    chrome_options.add_argument(f"--user-data-dir={user_dir}")
 
     # 새로운 창 생성
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
@@ -34,7 +40,11 @@ def main(campaign_links, id, pwd, headless = True):
     current_window_handle = driver.current_window_handle
 
     # <a href class='MyView-module__link_login___HpHMW'> 일때 해당 링크 클릭
-    driver.find_element(By.XPATH, "//a[@class='MyView-module__link_login___HpHMW']").click()
+    try:
+        driver.find_element(By.XPATH, "//a[@class='MyView-module__link_login___HpHMW']").click()
+    except NoSuchElementException:
+        print("No login button found; ID is assumed to be logged in.")
+        return driver
 
     # 새롭게 생성된 탭의 핸들을 찾습니다
     # 만일 새로운 탭이 없을경우 기존 탭을 사용합니다.
@@ -67,7 +77,17 @@ def main(campaign_links, id, pwd, headless = True):
     driver2.execute_script("arguments[0].value = arguments[1]", pw, input_pw)
     time.sleep(1)
 
-    #입력을 완료하면 로그인 버튼 클릭
+    # Enable Stay Signed in
+    if not driver2.find_element(By.CLASS_NAME, "input_keep").is_selected():
+        driver2.find_element(By.CLASS_NAME, "keep_text").click()
+        time.sleep(1)
+
+    # Enable IP Security
+    if not driver2.find_element(By.CLASS_NAME, "switch_checkbox").is_selected():
+        driver2.find_element(By.CLASS_NAME, "switch_btn").click()
+        time.sleep(1)
+
+    # 입력을 완료하면 로그인 버튼 클릭
     driver2.find_element(By.CLASS_NAME, "btn_login").click()
     time.sleep(1)
 
@@ -92,8 +112,12 @@ def main(campaign_links, id, pwd, headless = True):
         time.sleep(1)
         try_login_count += 1
 
+    return driver2
+
+
+def visit(campaign_links, driver2):
     for link in campaign_links:
-        print(link) # for debugging
+        print(link)  # for debugging
         try:
             # Send a request to the base URL
             driver2.get(link)
@@ -106,6 +130,12 @@ def main(campaign_links, id, pwd, headless = True):
             # pageSource = driver2.page_source
             # print(pageSource)
         time.sleep(1)
+
+
+def main(campaign_links, id, pwd, headless=True):
+    driver = init(campaign_links, id, pwd, headless)
+    visit(campaign_links, driver)
+    driver.quit()
 
 
 if __name__ == "__main__":
