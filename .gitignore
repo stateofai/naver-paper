@@ -2,4 +2,3 @@ log/
 __pycache__/
 run.sh
 *.log
-*.txt
