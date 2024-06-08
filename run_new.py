@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
@@ -34,17 +33,17 @@ def init(campaign_links, id, pwd, headless, new_save):
 
     # 새로운 창 생성
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-    driver.get('https://naver.com')
+    driver.get("https://nid.naver.com")
+
+    # Login page (log-in required) title for nid.naver.com
+    #   <title>Naver Sign in</title>
+    # ID page (successful logged-in) title for nid.naver.com
+    #   <title>Naver ID</title>
+    if driver.title == "Naver ID" or driver.title == "네이버ID":
+        return driver
 
     # 현재 열려 있는 창 가져오기
     current_window_handle = driver.current_window_handle
-
-    # <a href class='MyView-module__link_login___HpHMW'> 일때 해당 링크 클릭
-    try:
-        driver.find_element(By.XPATH, "//a[@class='MyView-module__link_login___HpHMW']").click()
-    except NoSuchElementException:
-        print("No login button found; ID is assumed to be logged in.")
-        return driver
 
     # 새롭게 생성된 탭의 핸들을 찾습니다
     # 만일 새로운 탭이 없을경우 기존 탭을 사용합니다.
@@ -107,9 +106,9 @@ def init(campaign_links, id, pwd, headless, new_save):
     try_login_count = 1
     while True:
         page_title = driver2.title
-        if(page_title == "NAVER"):
+        if page_title == "Naver ID" or page_title == "네이버ID":
             break
-        if(try_login_count > try_login_limit):
+        if try_login_count > try_login_limit:
             exit()
         print(f"로그인 되지 않음 #{try_login_count}")
         print(f"페이지 타이틀 : {page_title}")
