@@ -154,7 +154,7 @@ if __name__ == "__main__":
                         default=False, action=argparse.BooleanOptionalAction,
                         help="new save or do not")
     args = parser.parse_args()
-    cd_obj = None
+    cd_obj = [{'id':'', 'pw':''}]
     cd_len = 1
     headless = args.headless
     newsave = args.newsave
