@@ -159,8 +159,12 @@ if __name__ == "__main__":
     headless = args.headless
     newsave = args.newsave
     if args.id is None and args.pw is None and args.cd is None:
-        cd_obj[0]["id"] = os.getenv("USERNAME", "ID is NULL")
-        cd_obj[0]["pw"] = os.getenv("PASSWORD", "PASSWORD is NULL")
+        id = os.getenv("USERNAME")
+        pw = os.getenv("PASSWORD")
+        if(pw is None and pw is None):
+            print('not setting USERNAME / PASSWORD')
+            exit()
+        cd_obj = [{"id": id, "pw": pw}]
     elif(args.cd is not None):
         try:
             cd_obj = json.loads(args.cd)
@@ -177,8 +181,7 @@ if __name__ == "__main__":
         if args.pw is None:
             print('use -p or --pwd argument')
             exit()
-        cd_obj[0]["id"] = args.id
-        cd_obj[0]["pw"] = args.pw
+        cd_obj = [{"id": args.id, "pw": args.pw}]
 
     campaign_links = grep_campaign_links()
     for idx in range(cd_len):
