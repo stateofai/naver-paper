@@ -38,7 +38,7 @@ def find_naver_campaign_links(visited_urls_file='visited_urls_damoang.txt'):
         if full_link in visited_urls:
             continue  # Skip already visited links
 
-        res = requests.get(full_link)
+        res = requests.get(full_link, headers=request_headers)
         inner_soup = BeautifulSoup(res.text, 'html.parser')
 
         # Find all links that start with the campaign URL
