@@ -29,10 +29,8 @@ def init(id, pwd, ua, headless, new_save):
     if headless is True:
         chrome_options.add_argument("headless")
     user_dir = os.getcwd() + "/user_dir/" + hashlib.sha256(f"{id}_{pwd}_{ua}".encode('utf-8')).hexdigest()
-    print(f"user_dir: {user_dir}")
     chrome_options.add_argument(f"--user-data-dir={user_dir}")
     if ua is not None:
-        print(f"user_agent: {ua}")
         chrome_options.add_argument(f"--user-agent={ua}")
 
     # 새로운 창 생성
@@ -203,7 +201,7 @@ if __name__ == "__main__":
         pw = account.get("pw")
         ua = account.get("ua")
 
-        print(f">>> {idx+1}번째 계정: {id}")
+        print(f">>> {idx+1}번째 계정")
 
         if id is None:
             print("ID not found!")
