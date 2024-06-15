@@ -17,6 +17,7 @@ def find_naver_campaign_links(visited_urls_file='visited_urls_damoang.txt'):
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
     }
     response = requests.get(base_url, headers=request_headers)
+    print(f"damoang\tlist get HTTP STATUS : {response.status_code}")
     soup = BeautifulSoup(response.text, 'html.parser')
 
     # Find all span elements with class 'list_subject' and get 'a' tags
@@ -57,3 +58,7 @@ def find_naver_campaign_links(visited_urls_file='visited_urls_damoang.txt'):
             file.write(url + '\n')
 
     return campaign_links
+
+
+if __name__ == "__main__":
+    find_naver_campaign_links()
