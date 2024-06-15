@@ -22,14 +22,16 @@ def grep_campaign_links():
     return set(campaign_links)
 
 
-def init(campaign_links, id, pwd, headless, new_save):
+def init(id, pwd, ua, headless, new_save):
     # 크롬 드라이버 옵션 설정
     chrome_options = webdriver.ChromeOptions()
 
     if headless is True:
-        chrome_options.add_argument("headless")
-    user_dir = os.getcwd() + "/user_dir/" + hashlib.sha256(f"{id}_{pwd}".encode('utf-8')).hexdigest()
+        chrome_options.add_argument("--headless=new")
+    user_dir = os.getcwd() + "/user_dir/" + hashlib.sha256(f"{id}_{pwd}_{ua}".encode('utf-8')).hexdigest()
     chrome_options.add_argument(f"--user-data-dir={user_dir}")
+    if ua is not None:
+        chrome_options.add_argument(f"--user-agent={ua}")
 
     # 새로운 창 생성
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
@@ -112,7 +114,12 @@ def init(campaign_links, id, pwd, headless, new_save):
             exit()
         print(f"로그인 되지 않음 #{try_login_count}")
         print(f"페이지 타이틀 : {page_title}")
-        time.sleep(1)
+
+        if headless is True:
+            time.sleep(1)
+        else:
+            # Additional time for the user to address any login issues.
+            time.sleep(30)
         try_login_count += 1
 
     return driver2
@@ -135,8 +142,8 @@ def visit(campaign_links, driver2):
         time.sleep(1)
 
 
-def main(campaign_links, id, pwd, headless, newsave):
-    driver = init(campaign_links, id, pwd, headless, newsave)
+def main(campaign_links, id, pwd, ua, headless, newsave):
+    driver = init(id, pwd, ua, headless, newsave)
     visit(campaign_links, driver)
     driver.quit()
 
@@ -152,12 +159,16 @@ if __name__ == "__main__":
     parser.add_argument('--newsave', type=bool, required=False,
                         default=False, action=argparse.BooleanOptionalAction,
                         help="new save or do not")
+    parser.add_argument('-cf', '--credential-file', type=str, required=False,
+                        help="credential json file")
     args = parser.parse_args()
     cd_obj = None
-    cd_len = 1
     headless = args.headless
     newsave = args.newsave
-    if args.id is None and args.pw is None and args.cd is None:
+    if (args.id is None and
+            args.pw is None and
+            args.cd is None and
+            args.credential_file is None):
         id = os.getenv("USERNAME")
         pw = os.getenv("PASSWORD")
         if(pw is None and pw is None):
@@ -172,7 +183,9 @@ if __name__ == "__main__":
             print('credential json sample [{"id":"id1","pw":"pw1"},{"id":"id2","pw":"pw2"}]')
             print('json generate site https://jsoneditoronline.org/')
             exit()
-        cd_len = len(cd_obj)
+    elif args.credential_file is not None:
+        file_obj = open(args.credential_file, "r", encoding="utf-8")
+        cd_obj = json.load(file_obj)
     else:
         if args.id is None:
             print('use -i or --id argument')
@@ -183,6 +196,18 @@ if __name__ == "__main__":
         cd_obj = [{"id": args.id, "pw": args.pw}]
 
     campaign_links = grep_campaign_links()
-    for idx in range(cd_len):
+    for idx, account in enumerate(cd_obj):
+        id = account.get("id")
+        pw = account.get("pw")
+        ua = account.get("ua")
+
         print(f">>> {idx+1}번째 계정")
-        main(campaign_links, cd_obj[idx]["id"], cd_obj[idx]["pw"], headless, newsave)
+
+        if id is None:
+            print("ID not found!")
+            continue
+        if pw is None:
+            print("PW not found!")
+            continue
+
+        main(campaign_links, id, pw, ua, headless, newsave)
