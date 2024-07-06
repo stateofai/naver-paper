@@ -1,9 +1,15 @@
+import argparse
+import hashlib
+import json
+import logging
+import os
+import time
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-import time, os, argparse, json
-import hashlib
+from webdriver_manager.chrome import ChromeDriverManager
+
 import naver_paper_clien as clien
 import naver_paper_damoang as damoang
 import naver_paper_ppomppu as ppomppu
@@ -22,7 +28,7 @@ def grep_campaign_links():
     return set(campaign_links)
 
 
-def init(id, pwd, ua, headless, new_save):
+def init(id, pwd, ua, headless, newsave):
     # 크롬 드라이버 옵션 설정
     chrome_options = webdriver.ChromeOptions()
 
@@ -95,14 +101,15 @@ def init(id, pwd, ua, headless, new_save):
     # new.save 등록
     # new.dontsave 등록 안함
     try:
-        if(newsave):
+        if newsave is True:
             driver2.find_element(By.ID, "new.save").click()
         else:
             driver2.find_element(By.ID, "new.dontsave").click()
         time.sleep(1)
-    except:
-        print("new save or dontsave 오류")
-        pass
+    except Exception as e:
+        # Print warning and go to login page.
+        logging.warning("%s: new save or dontsave 오류", e)
+        driver.get("https://nid.naver.com")
 
     try_login_limit = os.getenv("TRY_LOGIN", 3)
     try_login_count = 1
