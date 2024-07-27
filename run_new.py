@@ -13,6 +13,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 import naver_paper_clien as clien
 import naver_paper_damoang as damoang
 import naver_paper_ppomppu as ppomppu
+import naver_paper_ruliweb as ruliweb
 
 
 def grep_campaign_links():
@@ -20,6 +21,7 @@ def grep_campaign_links():
     campaign_links += clien.find_naver_campaign_links()
     campaign_links += damoang.find_naver_campaign_links()
     campaign_links += ppomppu.find_naver_campaign_links()
+    campaign_links += ruliweb.find_naver_campaign_links()
 
     if(campaign_links == []):
         print("모든 링크를 방문했습니다.")
