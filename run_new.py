@@ -142,6 +142,7 @@ def visit(campaign_links, driver2):
             driver2.get(link)
             result = driver2.switch_to.alert
             print(result.text)
+            time.sleep(3)
             result.accept()
         except:
             print("알럿창 없음")
