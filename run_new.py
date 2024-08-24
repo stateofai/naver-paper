@@ -136,16 +136,23 @@ def init(id, pwd, ua, headless, newsave):
 
 def visit(campaign_links, driver2):
     for link in campaign_links:
-        print(link)  # for debugging
+        print(f"campaign link\t : {link}")
         try:
             # Send a request to the base URL
             driver2.get(link)
             result = driver2.switch_to.alert
-            print(result.text)
-            time.sleep(3)
+            print(f"알럿창\r\n{result.text}")
+            time.sleep(4)
             result.accept()
         except:
-            print("알럿창 없음")
+            try:
+                div_dim = driver2.find_element('css selector', 'div.dim')
+                print(f"레이어 알럿창\r\n{div_dim.text}")
+            except:
+                print(f"화면을 불러오지 못했거나 또는 내용 없음")
+                # error_title = driver2.find_element('css selector', 'div.error_title')
+                # print(f"{error_title.text}")
+                pass
             time.sleep(3)
             # pageSource = driver2.page_source
             # print(pageSource)
