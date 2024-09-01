@@ -135,8 +135,9 @@ def init(id, pwd, ua, headless, newsave):
 
 
 def visit(campaign_links, driver2):
-    for link in campaign_links:
-        print(f"campaign link\t : {link}")
+    campaign_links_len = len(campaign_links)
+    for idx, link in enumerate(campaign_links):
+        print(f"\r\n[{idx+1}/{campaign_links_len}] campaign link\t : {link}")
         try:
             # Send a request to the base URL
             driver2.get(link)
@@ -218,7 +219,7 @@ if __name__ == "__main__":
         pw = account.get("pw")
         ua = account.get("ua")
 
-        print(f">>> {idx+1}번째 계정")
+        print(f"\r\n>>> {idx+1}번째 계정")
 
         if id is None:
             print("ID not found!")

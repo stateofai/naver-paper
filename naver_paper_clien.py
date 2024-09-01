@@ -3,8 +3,9 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 base_url = "https://www.clien.net/service/board/jirum"
+site = "clien"
 
-def find_naver_campaign_links(visited_urls_file='visited_urls_clien.txt'):
+def find_naver_campaign_links(visited_urls_file='visited_urls_'+ site +'.txt'):
     # Read visited URLs from file
     try:
         with open(visited_urls_file, 'r') as file:
@@ -14,7 +15,7 @@ def find_naver_campaign_links(visited_urls_file='visited_urls_clien.txt'):
 
     # Send a request to the base URL
     response = requests.get(base_url)
-    print(f"clien\tlist get HTTP STATUS : {response.status_code}")
+    print(f"{site}\tlist get HTTP STATUS : {response.status_code}")
     soup = BeautifulSoup(response.text, 'html.parser')
 
     # Find all span elements with class 'list_subject' and get 'a' tags
@@ -32,13 +33,14 @@ def find_naver_campaign_links(visited_urls_file='visited_urls_clien.txt'):
     # Check each Naver link
     for link in naver_links:
         full_link = urljoin(base_url, link)
-        print("clien\tlinks : " + full_link)
+        print(f"{site}\tlinks : " + full_link)
         if full_link in visited_urls:
             continue  # Skip already visited links
 
         try:
             res = requests.get(full_link)
         except:
+            print(f"{site}\tfull link get error\r\n{full_link}")
             pass
         inner_soup = BeautifulSoup(res.text, 'html.parser')
 
