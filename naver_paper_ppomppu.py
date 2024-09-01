@@ -13,8 +13,12 @@ def find_naver_campaign_links(visited_urls_file='visited_urls_'+ site +'.txt'):
     except FileNotFoundError:
         visited_urls = set()
 
-    response = requests.get(base_url)
-    print(f"{site}\tlist get HTTP STATUS : {response.status_code}")
+    try:
+        response = requests.get(base_url, timeout=5)
+        print(f"{site}\tlist get HTTP STATUS : {response.status_code}")
+    except:
+        print(f"{site}\tlist get error\r\n{base_url}")
+        return []
     soup = BeautifulSoup(response.text, 'html.parser')
 
     list_subject_links = soup.find_all('td', class_='baseList-space')
