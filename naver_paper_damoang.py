@@ -2,6 +2,9 @@ import requests
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
+# disable InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
 base_url = "https://www.damoang.net/economy"
 
 def find_naver_campaign_links(visited_urls_file='visited_urls_damoang.txt'):
