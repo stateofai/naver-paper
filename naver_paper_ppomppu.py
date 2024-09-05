@@ -4,16 +4,21 @@ from bs4 import BeautifulSoup
 
 base_url = "https://www.ppomppu.co.kr/zboard/zboard.php?id=coupon"
 page_url = "https://www.ppomppu.co.kr/zboard/zboard.php?"
+site = "ppmppu"
 
-def find_naver_campaign_links(visited_urls_file='visited_urls_ppomppu.txt'):
+def find_naver_campaign_links(visited_urls_file='visited_urls_'+ site +'.txt'):
     try:
         with open(visited_urls_file, 'r') as file:
             visited_urls = set(file.read().splitlines())
     except FileNotFoundError:
         visited_urls = set()
 
-    response = requests.get(base_url)
-    print(f"ppomppu\tlist get HTTP STATUS : {response.status_code}")
+    try:
+        response = requests.get(base_url, timeout=5)
+        print(f"{site}\tlist get HTTP STATUS : {response.status_code}")
+    except:
+        print(f"{site}\tlist get error\r\n{base_url}")
+        return []
     soup = BeautifulSoup(response.text, 'html.parser')
 
     list_subject_links = soup.find_all('td', class_='baseList-space')
@@ -31,11 +36,15 @@ def find_naver_campaign_links(visited_urls_file='visited_urls_ppomppu.txt'):
     # Check each naver_links
     for link in naver_links:
         full_link = urljoin(page_url, link)
-        print("ppomppu\tlinks : " + full_link)
+        print(f"{site}\tlinks : " + full_link)
         if full_link in visited_urls:
             continue  # Skip already visited links
 
-        res = requests.get(full_link)
+        try:
+            res = requests.get(full_link)
+        except:
+            print(f"{site}\tfull link get error\r\n{full_link}")
+            pass
         inner_soup = BeautifulSoup(res.text, 'html.parser')
 
         campaign_a_tags = inner_soup.find_all('a', href=True)
