@@ -30,7 +30,7 @@ def grep_campaign_links():
     return set(campaign_links)
 
 
-def init(id, pwd, ua, headless, newsave):
+def init(id, pwd, ua, mobile_device, headless, newsave):
     # 크롬 드라이버 옵션 설정
     chrome_options = webdriver.ChromeOptions()
 
@@ -133,6 +133,48 @@ def init(id, pwd, ua, headless, newsave):
 
     return driver2
 
+def add_options_mobile_device(driver, mobile_device):
+    # 현재 URL 저장
+    current_url = driver.current_url
+
+    # 새로운 Chrome 옵션 생성
+    new_options = webdriver.ChromeOptions()
+
+    # 기존 옵션 복사 (가능한 경우)
+    try:
+        capabilities = driver.capabilities
+        if 'goog:chromeOptions' in capabilities:
+            chrome_options = capabilities['goog:chromeOptions']
+            if 'args' in chrome_options:
+                for arg in chrome_options['args']:
+                    new_options.add_argument(arg)
+    except:
+        print("기존 옵션을 복사하는 데 실패했습니다.")
+
+    # 모바일 에뮬레이션 추가
+    if mobile_device:
+        mobile_emulation = {"deviceName": mobile_device}
+        new_options.add_experimental_option("mobileEmulation", mobile_emulation)
+
+    # 새로운 드라이버 생성
+    new_driver = webdriver.Chrome(options=new_options)
+
+    # 쿠키 복사
+    new_driver.get(current_url)
+    for cookie in driver.get_cookies():
+        new_driver.add_cookie(cookie)
+
+    # 기존 드라이버 종료
+    driver.quit()
+    return new_driver
+
+def alert_accept(alert, drvier):
+    try:
+        alert.accept()
+    except:
+        print("일반적인 방법으로 알럿을 닫을 수 없습니다. JavaScript를 사용해 닫기를 시도합니다.")
+        drvier.execute_script("window.alert = function() {};")
+        drvier.execute_script("window.confirm = function() { return true; };")
 
 def visit(campaign_links, driver2):
     campaign_links_len = len(campaign_links)
@@ -143,14 +185,18 @@ def visit(campaign_links, driver2):
             driver2.get(link)
             result = driver2.switch_to.alert
             print(f"알럿창\r\n{result.text}")
-            time.sleep(4)
-            result.accept()
+            if (result.text == "적립 기간이 아닙니다."
+                or result.text == "클릭적립은 캠페인당 1회만 적립됩니다."):
+                alert_accept(result)
+            else:
+                time.sleep(4)
+                alert_accept(result)
         except:
             try:
                 div_dim = driver2.find_element('css selector', 'div.dim')
                 print(f"레이어 알럿창\r\n{div_dim.text}")
             except:
-                print(f"화면을 불러오지 못했거나 또는 내용 없음")
+                print(f"화면을 불러오지 못했거나 또는 클릭할 수 있는 내용 없음")
                 # error_title = driver2.find_element('css selector', 'div.error_title')
                 # print(f"{error_title.text}")
                 pass
@@ -160,8 +206,10 @@ def visit(campaign_links, driver2):
         time.sleep(1)
 
 
-def main(campaign_links, id, pwd, ua, headless, newsave):
-    driver = init(id, pwd, ua, headless, newsave)
+def main(campaign_links, id, pwd, ua, mobile_device, headless, newsave):
+    driver = init(id, pwd, ua, mobile_device, headless, newsave)
+    if mobile_device is not None:
+        driver = add_options_mobile_device(driver, mobile_device)
     visit(campaign_links, driver)
     driver.quit()
 
@@ -218,6 +266,7 @@ if __name__ == "__main__":
         id = account.get("id")
         pw = account.get("pw")
         ua = account.get("ua")
+        mobile_device = account.get("mobile_device")
 
         print(f"\r\n>>> {idx+1}번째 계정")
 
@@ -228,4 +277,4 @@ if __name__ == "__main__":
             print("PW not found!")
             continue
 
-        main(campaign_links, id, pw, ua, headless, newsave)
+        main(campaign_links, id, pw, ua, mobile_device, headless, newsave)

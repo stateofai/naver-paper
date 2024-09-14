@@ -3,10 +3,12 @@
         "id": "ID 1",
         "pw": "Password 1",
         "ua": "UA 1"
+        "mobile_device": "iPhone SE"
     },
     {
         "id": "ID 2",
         "pw": null,
         "ua": null
+        "mobile_device": "iPhone 12 Pro"
     }
 ]
