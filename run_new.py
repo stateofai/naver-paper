@@ -133,23 +133,20 @@ def init(id, pwd, ua, mobile_device, headless, newsave):
 
     return driver2
 
-def add_options_mobile_device(driver, mobile_device):
+def add_options_mobile_device(id, pwd, ua, mobile_device, headless, driver):
     # 현재 URL 저장
     current_url = driver.current_url
 
     # 새로운 Chrome 옵션 생성
     new_options = webdriver.ChromeOptions()
 
-    # 기존 옵션 복사 (가능한 경우)
-    try:
-        capabilities = driver.capabilities
-        if 'goog:chromeOptions' in capabilities:
-            chrome_options = capabilities['goog:chromeOptions']
-            if 'args' in chrome_options:
-                for arg in chrome_options['args']:
-                    new_options.add_argument(arg)
-    except:
-        print("기존 옵션을 복사하는 데 실패했습니다.")
+    # 기존 옵션
+    if headless is True:
+        new_options.add_argument("--headless=new")
+    user_dir = os.getcwd() + "/user_dir/" + hashlib.sha256(f"{id}_{pwd}_{mobile_device}".encode('utf-8')).hexdigest()
+    new_options.add_argument(f"--user-data-dir={user_dir}")
+    if ua is not None:
+        new_options.add_argument(f"--user-agent={ua}")
 
     # 모바일 에뮬레이션 추가
     if mobile_device:
@@ -209,7 +206,7 @@ def visit(campaign_links, driver2):
 def main(campaign_links, id, pwd, ua, mobile_device, headless, newsave):
     driver = init(id, pwd, ua, mobile_device, headless, newsave)
     if mobile_device is not None:
-        driver = add_options_mobile_device(driver, mobile_device)
+        driver = add_options_mobile_device(id, pwd, ua, mobile_device, headless, driver)
     visit(campaign_links, driver)
     driver.quit()
 
