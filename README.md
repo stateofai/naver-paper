@@ -57,7 +57,11 @@ $ git clone https://github.com/stateofai/naver-paper.git
 $ cd naver-paper
 $ pip install -r requirements.txt
 
-# 환경 변수로 USERNAME, PASSWORD 읽이서 실행
+# 환경 변수로 USERNAME, PASSWORD 단일 계정 읽어서 실행
+$ python run_new.py
+
+# 환경 변수로 CREDENTIALENV 복수 계정 읽어서 실행
+# CREDENTIALENV 값은 [{"id":"ID_1","pw":"PW_1"},{"id":"ID_2","pw":"PW_2"}] 형태 이어야 합니다.
 $ python run_new.py
 
 # argument 로 id, pw 입력
