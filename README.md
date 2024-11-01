@@ -8,6 +8,7 @@
 ### GitHub Actions 사용
 1. 이 repo를 fork
 2. secrets에 ID, PASSWORD 항목에 네이버 ID 및 패스워드 입력. ID라는 이름으로 네이버 ID를 넣고 PASSWORD라는 항목에 패스워드 입력
+   CREDENTIALENV 항목에 복수 계정 입력. 값은 [{"id":"ID_1","pw":"PW_1"},{"id":"ID_2","pw":"PW_2"}] 형태 이어야 합니다.
    (Settings -> Secrets and variable -> Actions -> New repository secret)
 3. 30분마다 주기적으로 실행되는 것을 확인
 4. secrets TRY_LOGIN 항목에 로그인 재시도 횟수 입력, 기본값은 3번
@@ -57,7 +58,11 @@ $ git clone https://github.com/stateofai/naver-paper.git
 $ cd naver-paper
 $ pip install -r requirements.txt
 
-# 환경 변수로 USERNAME, PASSWORD 읽이서 실행
+# 환경 변수로 USERNAME, PASSWORD 단일 계정 읽어서 실행
+$ python run_new.py
+
+# 환경 변수로 CREDENTIALENV 복수 계정 읽어서 실행
+# CREDENTIALENV 값은 [{"id":"ID_1","pw":"PW_1"},{"id":"ID_2","pw":"PW_2"}] 형태 이어야 합니다.
 $ python run_new.py
 
 # argument 로 id, pw 입력
