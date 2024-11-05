@@ -31,3 +31,4 @@ jobs:
       env:
         USERNAME: ${{ secrets.USERNAME }} # secret에 저장된 내용을 불러옴
         PASSWORD: ${{ secrets.PASSWORD }}
+        CREDENTIALENV : ${{ secrets.CREDENTIALENV }}
