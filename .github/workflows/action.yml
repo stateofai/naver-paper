@@ -1,8 +1,8 @@
 name: Naver Paper Python GitHub Actions
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '*/30 * * * *'
+  # schedule:
+  #   - cron: '*/30 * * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
